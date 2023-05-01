@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDrag } from "react-dnd";
+import { useDrag, useDrop } from "react-dnd";
 import { toast } from "react-hot-toast";
 
 function ListTasks({ tasks, setTasks }) {
@@ -62,8 +62,38 @@ const Section = function ({
     tasksToMap = closed;
   }
 
+  const [{ isOver }, drop] = useDrop(() => {
+    return {
+      accept: "tasks",
+      drop: (item) => dropUpdateHandler(item.id),
+      collect: (monitor) => {
+        return {
+          isOver: !!monitor.isOver(),
+        };
+      },
+    };
+  });
+
+  const dropUpdateHandler = (itemID) => {
+    setTasks((prev) => {
+      const modifiedTasks = prev.map((each) => {
+        if (each.id === itemID) {
+          return { ...each, status: status };
+        }
+
+        return each;
+      });
+      localStorage.setItem("tasks", JSON.stringify(modifiedTasks));
+      toast("Task Status Updated", { icon: "✅" });
+      return modifiedTasks;
+    });
+  };
+
   return (
-    <div className={`w-64`}>
+    <div
+      ref={drop}
+      className={`w-64 rounded-md p-2 ${isOver ? "bg-slate-200" : ""}`}
+    >
       <Header text={text} bg={bg} count={tasksToMap.length} />
       {tasksToMap.length > 0 &&
         tasksToMap.map((each, index) => (
@@ -88,6 +118,7 @@ const Task = function ({ task, tasks, setTasks }) {
   const [{ isDragging }, drag] = useDrag(() => {
     return {
       type: "tasks",
+      item: { id: task.id },
       collect: (monitor) => {
         return {
           isDragging: !!monitor.isDragging(),
@@ -112,7 +143,7 @@ const Task = function ({ task, tasks, setTasks }) {
       <p>{task.name}</p>
       <button
         onClick={() => taskFilterhandler(task.id)}
-        className="absolute bottom-1 right-1 text-slate-400"
+        className="absolute bottom-1 right-1 text-slate-400 pb-1.5"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

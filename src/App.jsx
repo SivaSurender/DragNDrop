@@ -22,6 +22,7 @@ export default function App() {
     <DndProvider backend={HTML5Backend}>
       <Toaster />
       <div className="bg-slate-100 w-screen h=screen flex flex-col items-center pt-32 gap-16">
+        <h1>Task Logger</h1>
         <CreateTasks tasks={tasks} setTasks={setTasks} />
         <ListTasks tasks={tasks} setTasks={setTasks} />
       </div>
