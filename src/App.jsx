@@ -1,48 +1,14 @@
-import { DndProvider } from "react-dnd";
+import { useState } from "react";
 import "./index.css";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import Notes from "./assets/components/Notes";
-import Bin from "./assets/components/Bin";
-import { useEffect, useState } from "react";
-
-const rawData = [
-  {
-    id: "sadsaf",
-    label: "Note 1",
-  },
-  {
-    id: "dfdsg",
-    label: "Note 2",
-  },
-  {
-    id: "sajhgjkdsaf",
-    label: "Note 3",
-  },
-];
+import CreateTasks from "./components/CreateTasks";
+import ListTasks from "./components/ListTasks";
 
 export default function App() {
-  const [noteList, setNoteList] = useState([]);
-  const [binList, setBinList] = useState([]);
-
-  useEffect(() => {
-    localStorage.setItem("initialItem", JSON.stringify(rawData));
-
-    const finalItem = localStorage.getItem("initialItem");
-
-    setNoteList(JSON.parse(finalItem));
-  }, []);
-
+  const [tasks, setTasks] = useState([]);
   return (
-    <DndProvider backend={HTML5Backend}>
-      <h1 className="text-center text-3xl font-semibold mt-4 py-2">
-        Drag-N-Drop
-      </h1>
-
-      {noteList.map((eachItem) => {
-        return <Notes key={eachItem.id} list={eachItem} />;
-      })}
-
-      <Bin binList={binList} noteList={noteList} setBinList={setBinList} />
-    </DndProvider>
+    <div className="bg-slate-100 w-screen h=screen flex flex-col items-center pt-3 gap-16">
+      <CreateTasks tasks={tasks} setTasks={setTasks} />
+      <ListTasks tasks={tasks} setTasks={setTasks} />
+    </div>
   );
 }
