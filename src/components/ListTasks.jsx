@@ -62,7 +62,11 @@ const Section = function ({
 
   return (
     <div className={`w-64`}>
-      <Header text={text} bg={bg} count={tasksToMap.length} /> List
+      <Header text={text} bg={bg} count={tasksToMap.length} />
+      {tasksToMap.length > 0 &&
+        tasksToMap.map((each, index) => (
+          <Task key={each.id} tasks={tasks} setTasks={setTasks} task={each} />
+        ))}
     </div>
   );
 };
@@ -75,6 +79,14 @@ const Header = function ({ text, bg, count }) {
       <div className="ml-2 bg-white w-5 h-5 text-black rounded-full flex items-center justify-center">
         {count}
       </div>
+    </div>
+  );
+};
+const Task = function ({ task, tasks, setTasks }) {
+  console.log(task, "task new");
+  return (
+    <div>
+      <p>{task.name}</p>
     </div>
   );
 };
