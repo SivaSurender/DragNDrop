@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 
 function ListTasks({ tasks, setTasks }) {
   const [todos, setTodos] = useState([]);
@@ -83,10 +84,33 @@ const Header = function ({ text, bg, count }) {
   );
 };
 const Task = function ({ task, tasks, setTasks }) {
-  console.log(task, "task new");
+  const taskFilterhandler = (taskId) => {
+    setTasks((prev) => prev.filter((each) => each.id !== taskId));
+
+    toast("Task removed", { icon: "✅" });
+  };
   return (
-    <div>
+    <div className={`relative p-4 mt-8 shadow-md rounded-md cursor-grab`}>
       <p>{task.name}</p>
+      <button
+        onClick={() => taskFilterhandler(task.id)}
+        className="absolute bottom-1 right-1 text-slate-400"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-6 h-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+      </button>
     </div>
   );
 };
