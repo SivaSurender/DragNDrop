@@ -85,8 +85,9 @@ const Header = function ({ text, bg, count }) {
 };
 const Task = function ({ task, tasks, setTasks }) {
   const taskFilterhandler = (taskId) => {
-    setTasks((prev) => prev.filter((each) => each.id !== taskId));
-
+    const filteredList = tasks.filter((each) => each.id !== taskId);
+    localStorage.setItem("tasks", JSON.stringify(filteredList));
+    setTasks(filteredList);
     toast("Task removed", { icon: "✅" });
   };
   return (
