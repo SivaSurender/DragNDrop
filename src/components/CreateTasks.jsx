@@ -7,11 +7,18 @@ function CreateTasks({ tasks, setTasks }) {
   const newTaskHandler = (e) => {
     e.preventDefault();
 
-    name.length <= 3 && name.length === 0 && name.length === 0
-      ? toast.error("Empty task")
-      : name.length <= 3
-      ? toast.error("A task should have more than 3 characters")
-      : null;
+    if (name.length === 0) {
+      toast.error("Empty task");
+      return;
+    }
+    if (name.length <= 3) {
+      toast.error("A task should have more than 3 characters");
+      return;
+    }
+    if (name.length >= 100) {
+      toast.error("A task can't be more than of 100 characters");
+      return;
+    }
 
     const newTask = {
       id: uuidv4(),
@@ -24,6 +31,8 @@ function CreateTasks({ tasks, setTasks }) {
     localStorage.setItem("tasks", JSON.stringify([...tasks, newTask]));
 
     setName("");
+
+    toast.success("Task Created");
   };
 
   return (

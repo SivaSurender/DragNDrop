@@ -19,7 +19,7 @@ export default function App() {
   return (
     <>
       <Toaster />
-      <div className="bg-slate-100 w-screen h=screen flex flex-col items-center pt-3 gap-16">
+      <div className="bg-slate-100 w-screen h=screen flex flex-col items-center pt-32 gap-16">
         <CreateTasks tasks={tasks} setTasks={setTasks} />
         <ListTasks tasks={tasks} setTasks={setTasks} />
       </div>
