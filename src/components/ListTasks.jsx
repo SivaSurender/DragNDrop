@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useDrag } from "react-dnd";
 import { toast } from "react-hot-toast";
 
 function ListTasks({ tasks, setTasks }) {
@@ -84,6 +85,17 @@ const Header = function ({ text, bg, count }) {
   );
 };
 const Task = function ({ task, tasks, setTasks }) {
+  const [{ isDragging }, drag] = useDrag(() => {
+    return {
+      type: "tasks",
+      collect: (monitor) => {
+        return {
+          isDragging: !!monitor.isDragging(),
+        };
+      },
+    };
+  });
+
   const taskFilterhandler = (taskId) => {
     const filteredList = tasks.filter((each) => each.id !== taskId);
     localStorage.setItem("tasks", JSON.stringify(filteredList));
@@ -91,7 +103,12 @@ const Task = function ({ task, tasks, setTasks }) {
     toast("Task removed", { icon: "✅" });
   };
   return (
-    <div className={`relative p-4 mt-8 shadow-md rounded-md cursor-grab`}>
+    <div
+      ref={drag}
+      className={`relative p-4 mt-8 shadow-md rounded-md cursor-grab ${
+        isDragging ? "opacity-25" : "opacity-100"
+      }`}
+    >
       <p>{task.name}</p>
       <button
         onClick={() => taskFilterhandler(task.id)}
