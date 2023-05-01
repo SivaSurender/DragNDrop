@@ -1,7 +1,7 @@
 import React from "react";
 
 function ListTasks({ tasks, setTasks }) {
-  return <div>ListTasks</div>;
+  return <div></div>;
 }
 
 export default ListTasks;

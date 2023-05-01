@@ -1,21 +1,27 @@
 import React, { useRef, useState } from "react";
+import { toast } from "react-hot-toast";
 import { v4 as uuidv4 } from "uuid";
 
 function CreateTasks({ tasks, setTasks }) {
   const [name, setName] = useState("");
-
   const newTaskHandler = (e) => {
     e.preventDefault();
-    setTasks((prev) => {
-      return [
-        {
-          ...prev,
-          id: uuidv4(),
-          name,
-          status: "todo",
-        },
-      ];
-    });
+
+    name.length <= 3 && name.length === 0 && name.length === 0
+      ? toast.error("Empty task")
+      : name.length <= 3
+      ? toast.error("A task should have more than 3 characters")
+      : null;
+
+    const newTask = {
+      id: uuidv4(),
+      name,
+      status: "todo",
+    };
+
+    setTasks((prev) => [...prev, newTask]);
+
+    localStorage.setItem("tasks", JSON.stringify([...tasks, newTask]));
 
     setName("");
   };
