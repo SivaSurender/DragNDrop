@@ -25,24 +25,24 @@ export default function App() {
   const [binList, setBinList] = useState([]);
 
   useEffect(() => {
-    const initialItem = localStorage.setItem(
-      "initialItem",
-      JSON.stringify(rawData)
-    );
+    localStorage.setItem("initialItem", JSON.stringify(rawData));
 
     const finalItem = localStorage.getItem("initialItem");
 
     setNoteList(JSON.parse(finalItem));
   }, []);
 
-  console.log(noteList);
   return (
     <DndProvider backend={HTML5Backend}>
       <h1 className="text-center text-3xl font-semibold mt-4 py-2">
         Drag-N-Drop
       </h1>
-      <Notes />
-      <Bin />
+
+      {noteList.map((eachItem) => {
+        return <Notes key={eachItem.id} list={eachItem} />;
+      })}
+
+      <Bin binList={binList} noteList={noteList} setBinList={setBinList} />
     </DndProvider>
   );
 }
