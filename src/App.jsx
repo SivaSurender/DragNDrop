@@ -11,7 +11,7 @@ export default function App() {
 
   useEffect(() => {
     const storedTasks = localStorage.getItem("tasks");
-
+    // guard class , set state variable from local storage if its exists
     if (storedTasks) {
       setTasks(JSON.parse(storedTasks));
     }

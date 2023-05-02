@@ -129,6 +129,8 @@ const Task = function ({ task, tasks, setTasks }) {
 
   const taskFilterhandler = (taskId) => {
     const filteredList = tasks.filter((each) => each.id !== taskId);
+
+    // set from local storage for data persisitence
     localStorage.setItem("tasks", JSON.stringify(filteredList));
     setTasks(filteredList);
     toast("Task removed", { icon: "✅" });
