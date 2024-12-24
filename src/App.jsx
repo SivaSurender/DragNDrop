@@ -27,8 +27,7 @@ export default function App() {
         </h1>
         <CreateTasks tasks={tasks} setTasks={setTasks} />
         <ListTasks tasks={tasks} setTasks={setTasks} />
-      </div>
-       <p
+         <p
           style={{
             marginTop: "auto",
             textAlign: "center",
@@ -45,6 +44,8 @@ export default function App() {
           </a>
           . Done in India with love ♥.
         </p>
+      </div>
+      
     </DndProvider>
   );
 }
