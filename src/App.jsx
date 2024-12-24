@@ -28,6 +28,23 @@ export default function App() {
         <CreateTasks tasks={tasks} setTasks={setTasks} />
         <ListTasks tasks={tasks} setTasks={setTasks} />
       </div>
+       <p
+          style={{
+            marginTop: "auto",
+            textAlign: "center",
+            color: "var(--color-light--1)",
+          }}
+        >
+          &copy;
+          <a
+            className="twitter-link cursor-pointer"
+            target="_blank"
+            href="https://my-portfolio-bala.vercel.app/"
+          >
+            <b>Bala.E</b>
+          </a>
+          . Done in India with love ♥.
+        </p>
     </DndProvider>
   );
 }
